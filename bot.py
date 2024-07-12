@@ -34,11 +34,15 @@ async def hello(ctx):
 
 @bot.command(name='라이선스')
 async def hello(ctx):
-    await ctx.send('코드:Jin Hyuk제작')
+    await ctx.send('https://github.com/jinheyopp123/JinBot|GitHub MIT라이선스라 자유입니다 :)')
 
 @bot.command(name='ddos')
 async def hello(ctx):
     await ctx.send('절대 안돼요')
+
+@bot.command(name='개발자')
+async def hello(ctx):
+    await ctx.send('김진혁 제작')
 
 
 # 하드코딩된 봇 토큰으로 봇 실행
