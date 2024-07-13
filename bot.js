@@ -30,6 +30,13 @@ client.on('messageCreate', async message => {
             .setDescription('테스트중입니다');
         await message.channel.send({ embeds: [embed] });
     }
+
+        if (message.content.toLowerCase() === '임베드2') {
+        const embed = new MessageEmbed()
+            .setTitle('없는데요?')
+            .setDescription('없다고요');
+        await message.channel.send({ embeds: [embed] });
+    }
 });
 
 // 명령어 핸들러
