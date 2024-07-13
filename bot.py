@@ -8,6 +8,9 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+# 공지 채널 설정 저장을 위한 딕셔너리
+announcement_channels = {}
+
 @bot.event
 async def on_ready():
     print(f'봇 이름: {bot.user.name}')
@@ -41,7 +44,7 @@ async def hello(ctx):
 
 @bot.command()
 async def 라이선스(ctx):
-    await ctx.send('https://github.com/jinheyopp123/JinBot | GitHub MIT라이선스라 자유입니다 :)')
+    await ctx.send('https://github.com/jinheyopp123/JinBot | GitHub MIT 라이선스라 자유입니다 :)')
 
 @bot.command()
 async def ddos(ctx):
@@ -86,6 +89,22 @@ async def 추방(ctx, member: discord.Member, *, reason=None):
     else:
         await ctx.send('권한이 부족합니다.')
 
+@bot.command()
+@commands.has_permissions(ban_members=True)
+async def 밴(ctx, member: discord.Member, *, reason=None):
+    if ctx.author.guild_permissions.ban_members:
+        if member:
+            await ctx.send(f'{member.mention}을(를) 밴합니다.')
+            await member.ban(reason=reason)
+        else:
+            await ctx.send('밴할 멤버를 멘션해주세요.')
+    else:
+        await ctx.send('권한이 부족합니다.')
+
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def 공지채널설정(ctx, channel: discord.TextChannel):
+    announcement_channels[ctx.guild.id] = channel.id
+    await ctx.send(f'공지 채널이 {channel.mention}으로 설정되었습니다!')
+
 bot.run('YOUR_BOT_TOKEN')
-
-
