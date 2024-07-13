@@ -16,6 +16,8 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    await bot.process_commands(message)
+
     if message.author.bot:
         return
 
@@ -53,7 +55,37 @@ async def 개발자(ctx):
 async def 개발내역(ctx):
     await ctx.send('현재 곧 개발이 완료됩니다.')
 
-# 봇 토큰을 여기에 입력하세요.
-TOKEN = 'YOUR_TOKEN'
-bot.run(TOKEN)
+@bot.command()
+async def 비밀메세지(ctx):
+    await ctx.send('DM으로 비밀번호 요청을 하였습니다!')
+    await ctx.author.send('비밀번호를 입력해주세요')
+
+    def check(dm_message):
+        return dm_message.author == ctx.author and isinstance(dm_message.channel, discord.DMChannel)
+
+    try:
+        dm_message = await bot.wait_for('message', check=check, timeout=60)  # 60초 대기
+        if dm_message.content == '0821':
+            await dm_message.channel.send('확인되었습니다.')
+            embed = discord.Embed(title='비밀 메세지', description='알아서 하세요')
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('비밀번호가 틀렸습니다.')
+    except asyncio.TimeoutError:
+        await ctx.send('시간이 초과되었습니다. 다시 시도해주세요.')
+
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def 추방(ctx, member: discord.Member, *, reason=None):
+    if ctx.author.guild_permissions.kick_members:
+        if member:
+            await ctx.send(f'{member.mention}을(를) 추방합니다.')
+            await member.kick(reason=reason)
+        else:
+            await ctx.send('추방할 멤버를 멘션해주세요.')
+    else:
+        await ctx.send('권한이 부족합니다.')
+
+bot.run('YOUR_BOT_TOKEN')
+
 
