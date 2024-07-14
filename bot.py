@@ -107,4 +107,8 @@ async def 공지채널설정(ctx, channel: discord.TextChannel):
     announcement_channels[ctx.guild.id] = channel.id
     await ctx.send(f'공지 채널이 {channel.mention}으로 설정되었습니다!')
 
+@bot.command()
+async def 힘들다(ctx):
+    await ctx.send('무슨 고민 있으신가요?')
+
 bot.run('YOUR_BOT_TOKEN')
