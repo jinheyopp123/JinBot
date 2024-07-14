@@ -7,15 +7,17 @@ intents.messages = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
-
+version = 'alpha-beta1.0'
 # 공지 채널 설정 저장을 위한 딕셔너리
 announcement_channels = {}
 
 @bot.event
 async def on_ready():
-    print(f'봇 이름: {bot.user.name}')
-    print(f'봇 ID: {bot.user.id}')
-    print('봇 준비 완료')
+    print(f'bot_name: {bot.user.name}')
+    print(f'bot_ID: {bot.user.id}')
+    print(f'bot_version: {version}')
+    print('bot_ready_complete')
+    print('Bot_login_complete')
 
 @bot.event
 async def on_message(message):
@@ -44,7 +46,7 @@ async def hello(ctx):
 
 @bot.command()
 async def 라이선스(ctx):
-    await ctx.send('https://github.com/jinheyopp123/JinBot | GitHub MIT 라이선스라 자유입니다 :)')
+    await ctx.send('[GitHub MIT 라이선스라 자유입니다 :)](https://github.com/jinheyopp123/JinBot)')
 
 @bot.command()
 async def ddos(ctx):
